@@ -1,1 +1,2 @@
-# LoLTCO frontend \n for human performance benchmarking
+# LoLTCO frontend
+for human performance benchmarking
