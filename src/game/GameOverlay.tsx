@@ -40,6 +40,20 @@ interface IProps {
 export const GameOverlay = ({ className }: IProps) => {
   const { numCorrectGuesses, totalNumMatches, guessCorrect, resetGame} = useGameContext();
 
+  const onSave = async () => {
+    const object = {
+      numCorrectGuesses,
+      totalNumMatches,
+      percentCorrect: numCorrectGuesses / totalNumMatches
+    }
+
+    const blob = new Blob([JSON.stringify(object)], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = 'results.json'
+    link.href = url;
+    link.click()
+  }
 
   return (
     <MainContainer className={className}>
@@ -47,6 +61,7 @@ export const GameOverlay = ({ className }: IProps) => {
         <StyledSpan >Score: {numCorrectGuesses}/{totalNumMatches}</StyledSpan>
       </ScoreBox>
       <StandardButton text="Reset" width={64} height={64} onClick={async () => {resetGame()}} color={Colors.correctGreen}/>
+      <StandardButton text="Save" width={64} height={64} onClick={onSave} color={Colors.correctGreen}/>
     </MainContainer>
   )
 }
